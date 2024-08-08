@@ -75,6 +75,15 @@ export class PokemonService {
     } catch (error) {
       this.handleExceptions( error );
     }
+
+    //valido que el pokemon exista
+    if (!pokemon) {
+      //valido en el caso que no encontramos nada
+      throw new NotFoundException(`Can't update pokemon with id, name or no "${term}" not found`);
+    }
+
+    //retorno que estoy enviando
+    return {...pokemon.toJSON() ,...updatePokemonDto};
   }
 
   async remove( id: string) {
@@ -86,7 +95,8 @@ export class PokemonService {
     if ( deletedCount === 0 )
       throw new BadRequestException(`Pokemon with id "${ id }" not found`);
 
-    return;
+    //devuelvo la respuesta
+    return `The pokemon with ${ id } was successfully deleted`;
   }
 
 
